@@ -1,6 +1,6 @@
 ---
 
-- name: Make configuration
+- name: Make work directories
   file:
     path: "{{ item }}"
     state: directory
@@ -10,6 +10,15 @@
   with_items:
     - "{{ filebeat_logs_dir }}"
     - "{{ filebeat_data_dir }}"
+
+- name: Make configuration directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  with_items:
+    - "{{ filebeat_config_dir }}"
+
     
 - name: Copy Filebeat configuration.
   template:
