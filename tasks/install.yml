@@ -25,7 +25,7 @@
   become: yes
   template:
     src: "supervisor.ini.j2"
-    dest: "{{ supervisor_conf_dir }}/filebeat.ini"
+    dest: "{{ supervisord_conf_dir }}/filebeat.ini"
     mode: "0644"
 
 - name: Install Filebeat Steve Configuration

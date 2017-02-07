@@ -4,8 +4,8 @@ process_name=%(program_name)s
 autostart=true
 autorestart=true
 user={{ filebeat_user }}
-stderr_logfile=/var/log/%(program_name)s.stderr.log
-stdout_logfile=/var/log/%(program_name)s.stdout.log
+stderr_logfile={{ filebeat_logs_dir }}/%(program_name)s.stderr.log
+stdout_logfile={{ filebeat_logs_dir }}/%(program_name)s.stdout.log
 
 
 
