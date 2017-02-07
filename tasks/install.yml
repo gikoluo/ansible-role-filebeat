@@ -1,0 +1,40 @@
+---
+
+- name: "Copy tar gz"
+  become: yes
+  copy:
+    src: "{{ filebeat_download_path }}/{{ filebeat_tarball }}.tar.gz"
+    dest: "/tmp/{{ filebeat_tarball }}.tar.gz"
+    
+- name: Extract the Filebeat tarball
+  become: yes
+  unarchive:
+    src: "/tmp/{{ filebeat_tarball }}.tar.gz"
+    dest: "/tmp/"
+    copy: no
+    creates: "/tmp/{{ filebeat_tarball }}"
+
+- name: Install Filebeat
+  become: yes
+  command: "cp -R /tmp/{{ filebeat_tarball }} {{ filebeat_install_dir }}"
+  args:
+    creates: "{{ filebeat_install_dir }}"
+    removes: "/tmp/{{ filebeat_tarball }}"
+
+- name: Install Filebeat services
+  become: yes
+  template:
+    src: "supervisor.ini.j2"
+    dest: "{{ supervisor_conf_dir }}/filebeat.ini"
+    mode: "0644"
+
+- name: Install Filebeat Steve Configuration
+  template:
+    src: "steve.ini"
+    dest: "/etc/steve/filebeat.ini"
+    mode: "0644"
+  become: True
+  tags: ["setup"]
+
+
+

@@ -1,0 +1,11 @@
+[program:filebeat]
+command={{ filebeat_install_dir }}/filebeat -c {{ filebeat_config_dir }}/filebeat.yml -path.home {{ filebeat_install_dir }} -path.config {{ filebeat_config_dir }} -path.data {{ filebeat_logs_dir }} -path.logs {{ filebeat_logs_dir }}
+process_name=%(program_name)s
+autostart=true
+autorestart=true
+user={{ filebeat_user }}
+stderr_logfile=/var/log/%(program_name)s.stderr.log
+stdout_logfile=/var/log/%(program_name)s.stdout.log
+
+
+

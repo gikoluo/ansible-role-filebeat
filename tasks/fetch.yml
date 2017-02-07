@@ -1,0 +1,17 @@
+#
+# fetch .tar.gz files
+#
+
+- stat:
+    path: "{{ filebeat_download_path }}/{{ filebeat_tarball }}.tar.gz"
+  register: st
+
+- debug: msg="Download {{ filebeat_tarball_url }} to {{ filebeat_download_path }}/{{ filebeat_tarball }}.tar.gz"
+
+- name: get Filebeat tarball (as tar.gz file)
+  get_url:
+    url:     "{{ filebeat_tarball_url }}"
+    dest:    "{{ filebeat_download_path }}/{{ filebeat_tarball }}.tar.gz"
+    mode:    0644
+  when: filebeat_download_from_remote and not st.stat.exists
+

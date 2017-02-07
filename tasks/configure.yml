@@ -1,0 +1,47 @@
+---
+
+- name: Make configuration
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ filebeat_user }}"
+    group: "{{ filebeat_group }}"
+    mode: 0755
+  with_items:
+    - "{{ filebeat_logs_dir }}"
+    - "{{ filebeat_data_dir }}"
+    
+- name: Copy Filebeat configuration.
+  template:
+    src: filebeat.yml.j2
+    dest: "{{ filebeat_config_dir }}/filebeat.yml"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart filebeat
+
+- name: Insert Filebeat prespector to configuration.
+  lineinfile:
+    dest: "{{ filebeat_config_file }}"
+    line: '- {{ item | to_json }}'
+    insertafter: "^filebeat.prospectors:$"
+  with_items: "{{ filebeat_prospectors }}"
+  notify: restart filebeat
+
+
+- name: Ensure Filebeat SSL key pair directory exists.
+  file:
+    path: "{{ filebeat_ssl_dir }}"
+    state: directory
+  when: filebeat_ssl_key_file
+
+- name: Copy SSL key and cert for filebeat.
+  copy:
+    src: "{{ item }}"
+    dest: "{{ filebeat_ssl_dir }}/{{ item | basename }}"
+    mode: 0644
+  with_items:
+    - "{{ filebeat_ssl_key_file }}"
+    - "{{ filebeat_ssl_certificate_file }}"
+  notify: restart filebeat
+  when: filebeat_ssl_key_file and filebeat_ssl_certificate_file
