@@ -1,17 +1,33 @@
 ---
-- include: setup-RedHat.yml
-  when: ansible_os_family == 'RedHat'
 
-- include: setup-Debian.yml
-  when: ansible_os_family == 'Debian'
+- include: tasks/set-role-variables.yml
 
-- name: Install Filebeat.
-  package: name=filebeat state=present
+- name: Install Filebeat
+  include: install.yml
+  tags:
+    - build
 
-- include: config.yml
+- name: Configure Filebeat
+  include: configure.yml
+  tags:
+    - configure
 
-- name: Ensure Filebeat is started and enabled at boot.
-  service:
-    name: filebeat
-    state: started
-    enabled: yes
+# - name: Ensure Filebeat is started and enabled at boot.
+#   service:
+#     name: filebeat
+#     state: started
+#     enabled: yes
+
+
+- name: Restart filebeat
+  shell: "steve -k restart -s filebeat"
+  become: True
+  tags: ["setup"]
+
+
+- name: Remove tmp files
+  become: yes
+  file:
+    path: "/tmp/{{ filebeat_tarball }}"
+    state: absent
+    

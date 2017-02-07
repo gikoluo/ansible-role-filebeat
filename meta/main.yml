@@ -2,13 +2,17 @@
 dependencies: []
 
 galaxy_info:
-  author: geerlingguy
+  author: gikoluo
   description: Filebeat for Linux.
-  company: "Midwestern Mac, LLC"
+  company: "JFPAL LTD"
   license: "license (BSD, MIT)"
   min_ansible_version: 2.0
   platforms:
   - name: EL
+    versions:
+    - 6
+    - 7
+  - name: CentOS
     versions:
     - 6
     - 7
@@ -21,6 +25,6 @@ galaxy_info:
     - trusty
     - xenial
   galaxy_tags:
-    - web
+    - elk
     - system
     - monitoring

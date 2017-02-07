@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/geerlingguy/ansible-role-filebeat.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-filebeat)
 
-An Ansible Role that installs [Filebeat](https://www.elastic.co/products/beats/filebeat) on RedHat/CentOS or Debian/Ubuntu.
+An Ansible Role that installs [Filebeat](https://www.elastic.co/products/beats/filebeat) on Linux, installed with tar.gz.
 
 ## Requirements
 
@@ -56,10 +56,10 @@ None.
 
     - hosts: logs
       roles:
-        - geerlingguy.java
-        - geerlingguy.elasticsearch
-        - geerlingguy.logstash
-        - geerlingguy.filebeat
+        - gikoluo.java
+        - gikoluo.elasticsearch
+        - gikoluo.logstash
+        - gikoluo.filebeat
 
 ## License
 
@@ -67,4 +67,4 @@ MIT / BSD
 
 ## Author Information
 
-This role was created in 2016 by [Jeff Geerling](https://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).
+This role was created in 2017 by [Giko Luo](http://www.luochunhui.com/), author of [Jfpal.com](https://www.jfpal.com/).

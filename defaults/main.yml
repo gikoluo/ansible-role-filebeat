@@ -1,8 +1,17 @@
 ---
-filebeat_prospectors:
+
+filebeat_config_filebeat_prospectors__default:
   - input_type: log
-    paths:
-      - "/var/log/*.log"
+    paths: 
+     - "/var/log/boot.log"
+
+# Custom filebeat prospectors
+filebeat_config_filebeat_prospectors__custom: []
+
+# Final filebeat prospectors
+filebeat_prospectors: "{{ filebeat_config_filebeat_prospectors__default +
+  filebeat_config_filebeat_prospectors__custom }}"
+
 
 filebeat_output_elasticsearch_enabled: false
 filebeat_output_elasticsearch_hosts:
@@ -12,6 +21,19 @@ filebeat_output_logstash_enabled: true
 filebeat_output_logstash_hosts:
   - "localhost:5044"
 
+filebeat_user: nobody
+filebeat_group: nobody
+
 filebeat_ssl_dir: /etc/pki/logstash
 filebeat_ssl_certificate_file: ""
 filebeat_ssl_key_file: ""
+
+filebeat_download_from_remote: false
+
+filebeat_install_dir: /opt/filebeat
+filebeat_download_base_url: https://artifacts.elastic.co/downloads/beats/filebeat
+filebeat_download_path: "files/elk"
+filebeat_logs_dir: /var/log/filebeat
+filebeat_config_dir: /etc/filebeat
+filebeat_data_dir: /data/filebeat
+

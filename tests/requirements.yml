@@ -1,4 +1,4 @@
 ---
-- src: geerlingguy.java
-- src: geerlingguy.elasticsearch
-- src: geerlingguy.logstash
+- src: gikoluo.orcal-java
+- src: gikoluo.elasticsearch
+- src: gikoluo.logstash
