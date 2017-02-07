@@ -28,6 +28,8 @@
     dest: "{{ supervisord_conf_dir }}/filebeat.ini"
     mode: "0644"
 
+
+    
 - name: Install Filebeat Steve Configuration
   template:
     src: "steve.ini"
@@ -35,6 +37,7 @@
     mode: "0644"
   become: True
   tags: ["setup"]
+
 
 
 

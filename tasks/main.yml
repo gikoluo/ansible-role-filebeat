@@ -18,6 +18,10 @@
 #     state: started
 #     enabled: yes
 
+- name: Restart filebeat
+  supervisorctl:
+    name: filebeat
+    state: present
 
 - name: Restart filebeat
   shell: "steve -k restart -s filebeat"
