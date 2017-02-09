@@ -17,9 +17,18 @@ filebeat_output_elasticsearch_enabled: false
 filebeat_output_elasticsearch_hosts:
   - "localhost:9200"
 
-filebeat_output_logstash_enabled: true
+filebeat_output_logstash_enabled: false
 filebeat_output_logstash_hosts:
   - "localhost:5044"
+
+
+filebeat_output_redis_enabled: false
+filebeat_output_redis_key: filebeat
+filebeat_output_redis_hosts:
+  - host: 127.0.0.1
+    data_type: "list"
+    key: "filebeat"
+
 
 filebeat_user: nobody
 filebeat_group: nobody

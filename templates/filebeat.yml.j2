@@ -131,3 +131,58 @@ output:
       #curve_types: []
 {% endif %}
 {% endif %}
+
+
+{% if filebeat_output_redis_enabled %}
+  ### Sample
+  #output.redis:
+  #  hosts: ["localhost"]
+  #  password: "my_password"
+  #  key: "filebeat"
+  #  db: 0
+  #  timeout: 
+
+  ### Redis as output
+  redis:
+    # The Logstash hosts
+    hosts:
+    {% for item in filebeat_output_redis_hosts %}
+      - "{{ item.host }}:{{ item.port }}"
+    {% endfor %}
+
+    # Number of workers per Logstash host.
+    #worker: 1
+
+    # Optional load balance the events between the Logstash hosts
+    #loadbalance: true
+
+    # Optional index name. The default index name depends on the each beat.
+    # For Packetbeat, the default is set to packetbeat, for Topbeat
+    # top topbeat and for Filebeat to filebeat.
+    key: {{ filebeat_output_redis_key|default("filebeat") }}
+
+{% if filebeat_ssl_certificate_file and filebeat_ssl_key_file %}
+    # Optional TLS. By default is off.
+    tls:
+      # List of root certificates for HTTPS server verifications
+      #certificate_authorities: ["/etc/pki/root/ca.pem"]
+
+      # Certificate for TLS client authentication
+      certificate: "{{ filebeat_ssl_dir }}/{{ filebeat_ssl_certificate_file | basename }}"
+
+      # Client Certificate Key
+      certificate_key: "{{ filebeat_ssl_dir }}/{{ filebeat_ssl_key_file | basename}}"
+
+      # Controls whether the client verifies server certificates and host name.
+      # If insecure is set to true, all server host names and certificates will be
+      # accepted. In this mode TLS based connections are susceptible to
+      # man-in-the-middle attacks. Use only for testing.
+      #insecure: true
+
+      # Configure cipher suites to be used for TLS connections
+      #cipher_suites: []
+
+      # Configure curve types for ECDHE based cipher suites
+      #curve_types: []
+{% endif %}
+{% endif %}
