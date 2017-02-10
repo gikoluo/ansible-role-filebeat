@@ -135,7 +135,7 @@ output:
 
 {% if filebeat_output_redis_enabled %}
   ### Sample
-  #output.redis:
+  #redis:
   #  hosts: ["localhost"]
   #  password: "my_password"
   #  key: "filebeat"
@@ -147,13 +147,13 @@ output:
     # The Logstash hosts
     hosts:
     {% for item in filebeat_output_redis_hosts %}
-      - "{{ item.host }}:{{ item.port }}"
+      - "{{ item.host }}:{{ item.port|default(6379) }}"
     {% endfor %}
 
     # Number of workers per Logstash host.
     #worker: 1
 
-    # Optional load balance the events between the Logstash hosts
+    # Optional load balance the events between the Redis hosts
     #loadbalance: true
 
     # Optional index name. The default index name depends on the each beat.

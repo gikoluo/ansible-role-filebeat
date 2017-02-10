@@ -4,6 +4,7 @@ filebeat_config_filebeat_prospectors__default:
   - input_type: log
     paths: 
      - "/var/log/boot.log"
+    enabled: false
 
 # Custom filebeat prospectors
 filebeat_config_filebeat_prospectors__custom: []
