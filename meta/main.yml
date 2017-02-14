@@ -10,20 +10,13 @@ galaxy_info:
   platforms:
   - name: EL
     versions:
-    - 6
-    - 7
-  - name: CentOS
-    versions:
-    - 6
-    - 7
+    - all
   - name: Debian
     versions:
-    - jessie
+    - all
   - name: Ubuntu
     versions:
-    - precise
-    - trusty
-    - xenial
+    - all
   galaxy_tags:
     - elk
     - system
