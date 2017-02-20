@@ -145,10 +145,8 @@ output:
   ### Redis as output
   redis:
     # The Logstash hosts
-    hosts:
-    {% for item in filebeat_output_redis_hosts %}
-      - "{{ item.host }}:{{ item.port|default(6379) }}"
-    {% endfor %}
+    hosts: {{ filebeat_output_redis_hosts | to_json }}
+    
 
     # Number of workers per Logstash host.
     #worker: 1
