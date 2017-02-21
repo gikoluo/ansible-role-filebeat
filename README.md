@@ -74,6 +74,7 @@ ansible-playbook roles/gikoluo.filebeat/prefetch.yml filebeat_version=5.2.1
         - "{{ playbook_dir }}/vars/softwares_version.yml"
         - "{{ playbook_dir }}/vars/global_resources.yml"
       roles:
+        - gikoluo.orcal-java
         - role: gikoluo.filebeat
           filebeat_version: "{{ versions.elk.filebeat }}"
           filebeat_output_logstash_enabled: false
