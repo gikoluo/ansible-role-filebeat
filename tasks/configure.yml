@@ -18,7 +18,6 @@
     mode: 0755
   with_items:
     - "{{ filebeat_config_dir }}"
-
     
 - name: Copy Filebeat configuration.
   template:

@@ -21,15 +21,13 @@
     creates: "{{ filebeat_install_dir }}"
     removes: "/tmp/{{ filebeat_tarball }}"
 
-- name: Install Filebeat services
+- name: Install Filebeat as supervisord services
   become: yes
   template:
     src: "supervisor.ini.j2"
-    dest: "{{ supervisord_conf_dir }}/filebeat.ini"
+    dest: "{{ supervisord_conf_dir|default('/etc/supervisor/') }}/filebeat.ini"
     mode: "0644"
 
-
-    
 - name: Install Filebeat Steve Configuration
   template:
     src: "steve.ini"
@@ -37,6 +35,8 @@
     mode: "0644"
   become: True
   tags: ["setup"]
+  when: has_giko_steve == True
+  
 
 
 

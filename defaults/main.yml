@@ -1,9 +1,13 @@
 ---
 
+filebeat_version: 5.2.1
+
+
+
 filebeat_config_filebeat_prospectors__default:
   - input_type: log
     paths: 
-     - "/var/log/boot.log"
+     - "{{ log_root|default('/var/log') }}/boot.log"
     enabled: false
 
 # Custom filebeat prospectors
@@ -40,10 +44,15 @@ filebeat_ssl_key_file: ""
 
 filebeat_download_from_remote: false
 
-filebeat_install_dir: /opt/filebeat
+filebeat_install_dir: "{{ opt_root|default('/var/log') }}/filebeat"
 filebeat_download_base_url: https://artifacts.elastic.co/downloads/beats/filebeat
 filebeat_download_path: "files/elk"
-filebeat_logs_dir: /var/log/filebeat
+filebeat_logs_dir: "{{ log_root|default('/var/log') }}/filebeat"
 filebeat_config_dir: /etc/filebeat
-filebeat_data_dir: /data/filebeat
+filebeat_config_file: "{{filebeat_config_dir}}/filebeat.yml"
+filebeat_data_dir: "{{ data_root|default('/data') }}/filebeat"
+
+#filebeat_service_type: "systemd"
+
+
 

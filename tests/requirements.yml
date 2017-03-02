@@ -1,4 +1,7 @@
 ---
-- src: gikoluo.orcal-java
-- src: gikoluo.elasticsearch
-- src: gikoluo.logstash
+
+
+#- src: gikoluo.oracal-java
+#- src: gikoluo.elasticsearch
+- src: gikoluo.redis
+- src: gikoluo.supervisor
