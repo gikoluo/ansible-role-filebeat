@@ -1,10 +1,12 @@
 ---
 - hosts: all
-
+  become: true
+  vars:
+    supervisord_conf_dir: /etc/supervisor
   pre_tasks:
-    - name: Update apt cache.
-      apt: update_cache=yes
-      when: ansible_os_family == 'Debian'
+    # - name: Update apt cache.
+    #   apt: update_cache=yes
+    #   when: ansible_os_family == 'Debian'
 
     - name: Install test dependencies (RedHat).
       package: name=which state=present
@@ -14,7 +16,9 @@
       package: name=curl state=present
 
   roles:
-    - gikoluo.java
-    - gikoluo.elasticsearch
-    - gikoluo.logstash
-    - role_under_test
+    - gikoluo.supervisor
+    - role: role_under_test
+      vars:
+        filebeat_version: 5.2.1
+        filebeat_user: root  #set to root because test in docker
+        filebeat_group: root #set to root because test in docker

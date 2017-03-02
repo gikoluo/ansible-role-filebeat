@@ -2,6 +2,28 @@
 
 - include: tasks/set-role-variables.yml
 
+
+- stat:
+    path: "/etc/steve"
+  register: steve_st
+
+- debug: var=steve_st
+
+- debug: var=ansible_service_mgr
+
+- debug: var=ansible_distribution
+
+- debug: var=ansible_virtualization_type
+
+
+- set_fact:
+    has_giko_steve: true
+  when: steve_st.stat.exists == true and steve_st.stat.isdir == true
+
+- set_fact:
+    has_giko_steve: false
+  when: steve_st.stat.exists == false or steve_st.stat.isdir == false
+
 - name: Install Filebeat
   include: install.yml
   tags:
@@ -22,11 +44,13 @@
   supervisorctl:
     name: filebeat
     state: present
+  when: has_giko_steve == false
 
 - name: Restart filebeat
   shell: "steve -k restart -s filebeat"
   become: True
   tags: ["setup"]
+  when: has_giko_steve == true
 
 
 - name: Remove tmp files
