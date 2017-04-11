@@ -1,12 +1,12 @@
 ---
 
 
+
+#  service: name=filebeat state=restarted
+#  when: ansible_service_mgr is defined and ansible_service_mgr == 'systemd'
+
 - name: restart filebeat
-  service: name=filebeat state=restarted
-  when: ansible_service_mgr is defined and ansible_service_mgr == 'systemd'
-
-
-- supervisorctl:
+  supervisorctl:
     name: filebeat
     state: restarted
 

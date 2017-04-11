@@ -4,15 +4,18 @@
 # List of prospectors to fetch data.
 filebeat.prospectors:
 
+
+filebeat.config_dir: conf.d/
+
 # Configure what outputs to use when sending the data collected by the beat.
 # Multiple outputs may be used.
 output:
 
-{% if filebeat_output_elasticsearch_enabled %}
+{% if filebeat_broker_type == "elasticsearch" %}
   ### Elasticsearch as output
   elasticsearch:
     # Array of hosts to connect to.
-    hosts: {{ filebeat_output_elasticsearch_hosts | to_json }}
+    hosts: {{ filebeat_brokers["elasticsearch"] | to_json }}
 
     # Optional protocol and basic auth credentials. These are deprecated.
     #protocol: "https"
@@ -89,11 +92,11 @@ output:
 {% endif %}
 {% endif %}
 
-{% if filebeat_output_logstash_enabled %}
+{% if filebeat_broker_type == "logstash" %}
   ### Logstash as output
   logstash:
     # The Logstash hosts
-    hosts: {{ filebeat_output_logstash_hosts | to_json }}
+    hosts: {{ filebeat_brokers["logstash"] | to_json }}
 
     # Number of workers per Logstash host.
     #worker: 1
@@ -132,8 +135,23 @@ output:
 {% endif %}
 {% endif %}
 
+{% if filebeat_broker_type == "kafka" %}
+  ### kafka as output
+  kafka:
+    # The Logstash hosts
+    hosts: {{ filebeat_brokers["kafka"] | to_json }}
+    topic: '%{[type]}'
+    
+    partition.round_robin:
+    reachable_only: false
 
-{% if filebeat_output_redis_enabled %}
+    required_acks: 1
+    compression: gzip
+    max_message_bytes: 1000000
+{% endif %}
+
+
+{% if filebeat_broker_type == "redis" %}
   ### Sample
   #redis:
   #  hosts: ["localhost"]
@@ -145,7 +163,7 @@ output:
   ### Redis as output
   redis:
     # The Logstash hosts
-    hosts: {{ filebeat_output_redis_hosts | to_json }}
+    hosts: {{ filebeat_brokers["redis"] | to_json }}
     
 
     # Number of workers per Logstash host.
