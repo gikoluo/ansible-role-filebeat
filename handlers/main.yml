@@ -5,16 +5,17 @@
 #  service: name=filebeat state=restarted
 #  when: ansible_service_mgr is defined and ansible_service_mgr == 'systemd'
 
+- name: reread supervisord
+  command: supervisorctl reread && supervisorctl update filebeat
+
+
 - name: restart filebeat
   supervisorctl:
     name: filebeat
     state: restarted
+  when: has_giko_steve == false
 
-# - name: restart filebeat
-#   service: name=filebeat state=restarted
-#   when: ansible_service_mgr is defined and ansible_service_mgr == 'upstart'
-  
-# - name: restart filebeat
-#   shell: "steve -k restart -s filebeat"
-#   become: True
-#   tags: ["update"]
+- name: restart filebeat
+  shell: "steve -k restart -s filebeat"
+  become: yes
+  when: has_giko_steve == true

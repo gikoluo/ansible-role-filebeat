@@ -27,14 +27,14 @@
     src: "supervisor.ini.j2"
     dest: "{{ supervisord_conf_dir|default('/etc/supervisor/') }}/filebeat.ini"
     mode: "0644"
+  notify: reread supervisord
 
 - name: Install Filebeat Steve Configuration
   template:
     src: "steve.ini"
     dest: "/etc/steve/filebeat.ini"
     mode: "0644"
-  become: True
-  tags: ["setup"]
+  become: yes
   when: has_giko_steve == True
   
 

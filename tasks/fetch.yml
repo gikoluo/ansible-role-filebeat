@@ -6,8 +6,6 @@
     path: "{{ filebeat_download_path }}/{{ filebeat_tarball }}.tar.gz"
   register: st
 
-- debug: msg="Download {{ filebeat_tarball_url }} to {{ filebeat_download_path }}/{{ filebeat_tarball }}.tar.gz"
-
 - name: get Filebeat tarball (as tar.gz file)
   get_url:
     url:     "{{ filebeat_tarball_url }}"

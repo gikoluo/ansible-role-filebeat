@@ -29,15 +29,13 @@
     mode: 0644
   notify: restart filebeat
 
-
-- name: Insert Filebeat prespector to configuration.
-  lineinfile:
-    dest: "{{ filebeat_config_file }}"
-    line: '- {{ item | to_json }}'
-    insertafter: "^filebeat.prospectors:$"
-  with_items: "{{ filebeat_prospectors }}"
-  notify: restart filebeat
-
+# - name: Insert Filebeat prespector to configuration.
+#   lineinfile:
+#     dest: "{{ filebeat_config_file }}"
+#     line: '- {{ item | to_json }}'
+#     insertafter: "^filebeat.prospectors:$"
+#   with_items: "{{ filebeat_prospectors }}"
+#   notify: restart filebeat
 
 - name: Ensure Filebeat SSL key pair directory exists.
   file:
