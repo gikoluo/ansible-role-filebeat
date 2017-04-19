@@ -148,13 +148,17 @@ output:
 {% if filebeat_broker_type == "kafka" %}
   ### kafka as output
   kafka:
-    # The Logstash hosts
+    # initial brokers for reading cluster metadata
+    enabled: true
     hosts: {{ filebeat_brokers["kafka"] | to_json }}
-    topic: '%{[type]}'
-    
-    partition.round_robin:
-    reachable_only: false
 
+    # message topic selection + partitioning
+    topic: 'filebeats'
+    
+    partition.hash:
+      reachable_only: false
+
+    keep_alive: 10s
     required_acks: 1
     compression: gzip
     max_message_bytes: 1000000
