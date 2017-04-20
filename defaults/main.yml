@@ -2,7 +2,7 @@
 
 filebeat_version: 5.3.0
 
-
+filebeat_name: "filebeat"
 
 filebeat_config_filebeat_prospectors__default:
   - input_type: log
