@@ -54,5 +54,5 @@ filebeat_data_dir: "{{ data_root|default('/data') }}/filebeat"
 
 #filebeat_service_type: "systemd"
 
-
+FORCE_UPDATE: false
 

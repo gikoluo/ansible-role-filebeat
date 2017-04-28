@@ -13,9 +13,4 @@
   supervisorctl:
     name: filebeat
     state: restarted
-  when: has_giko_steve == false
-
-- name: restart filebeat
-  shell: "steve -k restart -s filebeat"
   become: yes
-  when: has_giko_steve == true

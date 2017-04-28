@@ -15,8 +15,16 @@
     has_giko_steve: false
   when: steve_st.stat.exists == false or steve_st.stat.isdir == false
 
+- name: check version
+  shell: "{{ filebeat_install_dir }}/filebeat --version"
+  register: fb_version
+  ignore_errors: yes
+  changed_when: false
+
+
 - name: Install Filebeat
   include: install.yml
+  when: filebeat_version not in fb_version.stdout
   tags:
     - build
 

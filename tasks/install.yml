@@ -1,5 +1,10 @@
 ---
 
+- name: restart filebeat
+  supervisorctl:
+    name: filebeat
+    state: stopped
+
 - name: "Copy tar gz"
   become: yes
   copy:
@@ -12,14 +17,11 @@
     src: "/tmp/{{ filebeat_tarball }}.tar.gz"
     dest: "/tmp/"
     copy: no
-    creates: "/tmp/{{ filebeat_tarball }}"
 
 - name: Install Filebeat
   become: yes
-  command: "cp -R /tmp/{{ filebeat_tarball }} {{ filebeat_install_dir }}"
-  args:
-    creates: "{{ filebeat_install_dir }}"
-    removes: "/tmp/{{ filebeat_tarball }}"
+  command: "cp -aT /tmp/{{ filebeat_tarball }} {{ filebeat_install_dir }}"
+  notify: restart filebeat
 
 - name: Install Filebeat as supervisord services
   become: yes
