@@ -4,6 +4,7 @@
   supervisorctl:
     name: filebeat
     state: stopped
+  ignore_errors: yes
 
 - name: "Copy tar gz"
   become: yes
